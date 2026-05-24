@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Invitație</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            max-width: 800px;
+            margin-bottom: 40px;
+        }
+
+        #buttons {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        button {
+            padding: 20px 40px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #da {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        #nu {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        #warning {
+            position: absolute;
+            bottom: 20px;
+            font-weight: bold;
+        }
+
+        #result {
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="title">
+        Pe 26 mai mi-ar plăcea să mi te alături pentru a îmi celebra ziua de naștere!  
+        <br>Apasă pentru a continua.
+    </h1>
+
+    <div id="buttons">
+        <button id="da">DA</button>
+        <button id="nu">NU</button>
+    </div>
+
+    <div id="result"></div>
+
+    <div id="warning">ATENȚIE RĂSPUNSUL ESTE CONTRAINTUITIV!!!</div>
+
+    <script>
+        let nuClicks = 0;
+        let stage = 1;
+
+        const daBtn = document.getElementById("da");
+        const nuBtn = document.getElementById("nu");
+        const result = document.getElementById("result");
+        const title = document.getElementById("title");
+        const buttonsDiv = document.getElementById("buttons");
+
+        daBtn.onclick = () => {
+            if (stage === 1) {
+                showBartini();
+            } else if (stage === 2) {
+                resizeButtons(-1);
+            }
+        };
+
+        nuBtn.onclick = () => {
+            if (stage === 1) {
+                nuClicks++;
+                resizeButtons(1);
+
+                if (nuClicks === 3) {
+                    showTogetherQuestion();
+                }
+            } else if (stage === 2) {
+                showFinalInvite();
+            }
+        };
+
+        function resizeButtons(direction) {
+            const daSize = daBtn.offsetWidth;
+            const nuSize = nuBtn.offsetWidth;
+
+            if (direction === 1) {
+                daBtn.style.transform = "scale(1.2)";
+                nuBtn.style.transform = "scale(0.8)";
+            } else {
+                daBtn.style.transform = "scale(0.8)";
+                nuBtn.style.transform = "scale(1.2)";
+            }
+        }
+
+        function showBartini() {
+            title.style.display = "none";
+            buttonsDiv.style.display = "none";
+            result.innerText = "BARTINI ROOFTOP LA ORA 18:00";
+        }
+
+        function showTogetherQuestion() {
+            stage = 2;
+            nuClicks = 0;
+
+            title.innerText = "BUN DECI ALEGEM ÎMPREUNĂ?";
+            daBtn.style.transform = "scale(1)";
+            nuBtn.style.transform = "scale(1)";
+        }
+
+        function showFinalInvite() {
+            title.style.display = "none";
+            buttonsDiv.style.display = "none";
+            result.innerText =
+                "PE DATA DE 26.05.2026, MI-AR FACE MAREA PLĂCERE SĂ MĂ ÎNSOȚEȘTI " +
+                "LA UN MIC PICNIC ÎN IOR LA ORA 13:00 ȘI LA ORA 18:00 " +
+                "LA BARTINI ROOFTOP 🤗🤗🤗";
+        }
+    </script>
+
+</body>
+</html>
